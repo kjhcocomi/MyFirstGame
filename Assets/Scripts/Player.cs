@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    public float curr_health;
+    public float max_health;
     public float speed;
+    public float attack;
+    public float critical_chance;
+    public float critical_damage;
     float h;
     float v;
 
+    int rayh;
+    int rayv;
     int firstdir;
 
     public Rigidbody2D rigid;
 
     public Animator anim;
+    GameObject ScanObject;
 
     void Start()
     {
@@ -23,6 +30,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         InputMove();
+        InputScan();
     }
     void InputMove()
     {
@@ -39,7 +47,30 @@ public class Player : MonoBehaviour
             if (firstdir == 0) v = 0;
             else h = 0;
         }
+        GetPlayerRay();
         SetAnimation();
+    }
+    void GetPlayerRay()
+    {
+        if (h != 0)
+        {
+            rayh = (int)h;
+            rayv = 0;
+        }
+        else if (v != 0)
+        {
+            rayh = 0;
+            rayv = (int)v;
+        }
+    }
+    void InputScan()
+    {
+        /*
+        if (Input.GetButtonDown("Jump") && ScanObject != null)
+        {
+            //gm.Action(ScanObject);
+        }
+        */
     }
     void SetAnimation()
     {
@@ -58,9 +89,25 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         Move();
+        ShootRay();
     }
     void Move()
     {
         rigid.velocity = new Vector2(h, v) * speed;
+    }
+    void ShootRay()
+    {
+        Vector2 RayVec = new Vector2(rayh, rayv);
+        Debug.DrawRay(rigid.position, RayVec, new Color(0, 1, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, RayVec, 1f, LayerMask.GetMask("Object"));
+
+        if (rayHit.collider != null)
+        {
+            ScanObject = rayHit.collider.gameObject;
+        }
+        else
+        {
+            ScanObject = null;
+        }
     }
 }

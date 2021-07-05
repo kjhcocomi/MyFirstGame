@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 1209876c588edb04caa2d7fa6a8bed5f
+guid: 2dfd902b64ab8a04da6bcdeb1e55dcf2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6708319091944008119
-    second: wakgood_left_walk_0
+      213: -5816642994671486895
+    second: portal_0
   - first:
-      213: -5362762326655589743
-    second: wakgood_left_walk_1
+      213: 2720290072527178061
+    second: portal_1
   - first:
-      213: 7296937216746987147
-    second: wakgood_left_walk_2
+      213: -68809774801260167
+    second: portal_2
   - first:
-      213: -7458742425043749830
-    second: wakgood_left_walk_3
+      213: -4604820735629425415
+    second: portal_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,13 +127,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wakgood_left_walk_0
+      name: portal_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 25
-        width: 7
-        height: 24
+        x: 0
+        y: 26
+        width: 23
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,20 +141,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b92b430cacb81d50800000000000000
-      internalID: 6708319091944008119
+      spriteID: 1587755a302274fa0800000000000000
+      internalID: -5816642994671486895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_left_walk_1
+      name: portal_1
       rect:
         serializedVersion: 2
-        x: 33
-        y: 25
-        width: 8
-        height: 23
+        x: 25
+        y: 26
+        width: 23
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,20 +162,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 192a8d8b314a395b0800000000000000
-      internalID: -5362762326655589743
+      spriteID: d490103886960c520800000000000000
+      internalID: 2720290072527178061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_left_walk_2
+      name: portal_2
       rect:
         serializedVersion: 2
-        x: 8
-        y: 0
-        width: 7
-        height: 24
+        x: 0
+        y: 1
+        width: 23
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,20 +183,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8e1880ecbde34560800000000000000
-      internalID: 7296937216746987147
+      spriteID: 97175e7dfd98b0ff0800000000000000
+      internalID: -68809774801260167
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_left_walk_3
+      name: portal_3
       rect:
         serializedVersion: 2
-        x: 33
-        y: 0
-        width: 7
-        height: 23
+        x: 25
+        y: 1
+        width: 23
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a34b12458493d7890800000000000000
-      internalID: -7458742425043749830
+      spriteID: 9f4847630f36810c0800000000000000
+      internalID: -4604820735629425415
       vertices: []
       indices: 
       edges: []

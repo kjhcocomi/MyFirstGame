@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 540503da5c82f36489656cec0e487566
+guid: 255265d0383948c4c8066dcf2ac2651e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4579337423923770742
-    second: wakgood_front_walk_0
+      213: 7482345211918694577
+    second: wakgood_front_walk_edge_0
   - first:
-      213: -216162783511636135
-    second: wakgood_front_walk_1
+      213: -4367956740118863048
+    second: wakgood_front_walk_edge_1
   - first:
-      213: 2551990035731597336
-    second: wakgood_front_walk_2
+      213: 4323961590744928512
+    second: wakgood_front_walk_edge_2
   - first:
-      213: 6772235688391054671
-    second: wakgood_front_walk_3
+      213: -3682572247655721394
+    second: wakgood_front_walk_edge_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,12 +127,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wakgood_front_walk_0
+      name: wakgood_front_walk_edge_0
       rect:
         serializedVersion: 2
-        x: 7
+        x: 6
         y: 25
-        width: 10
+        width: 12
         height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -141,19 +141,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8a0f5410ece270c0800000000000000
-      internalID: -4579337423923770742
+      spriteID: 1b8324bb351a6d760800000000000000
+      internalID: 7482345211918694577
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_front_walk_1
+      name: wakgood_front_walk_edge_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 31
         y: 25
-        width: 10
+        width: 12
         height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -162,19 +162,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 957112bf719000df0800000000000000
-      internalID: -216162783511636135
+      spriteID: 83321febc76e163c0800000000000000
+      internalID: -4367956740118863048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_front_walk_2
+      name: wakgood_front_walk_edge_2
       rect:
         serializedVersion: 2
-        x: 7
+        x: 6
         y: 0
-        width: 10
+        width: 12
         height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -183,19 +183,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8184e1e9a6d7a6320800000000000000
-      internalID: 2551990035731597336
+      spriteID: 001d8ce482cc10c30800000000000000
+      internalID: 4323961590744928512
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_front_walk_3
+      name: wakgood_front_walk_edge_3
       rect:
         serializedVersion: 2
-        x: 32
+        x: 31
         y: 0
-        width: 10
+        width: 12
         height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4595cd4a70dbfd50800000000000000
-      internalID: 6772235688391054671
+      spriteID: e46d4c64d00e4ecc0800000000000000
+      internalID: -3682572247655721394
       vertices: []
       indices: 
       edges: []
