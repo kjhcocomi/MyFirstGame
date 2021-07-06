@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 490325d7ab4626940af4cbd56958e59f
+guid: c47f25435fbce604cb2f2a7d71a8022e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7357791047081733888
-    second: wakgood_right_walk_edge_0
+      213: -3342858585769340381
+    second: wakgood_walk_left_0
   - first:
-      213: -591943134606248916
-    second: wakgood_right_walk_edge_1
+      213: -3389216800120858333
+    second: wakgood_walk_left_1
   - first:
-      213: 9196181776303932876
-    second: wakgood_right_walk_edge_2
+      213: -5463464712841964465
+    second: wakgood_walk_left_2
   - first:
-      213: 7486523025895562771
-    second: wakgood_right_walk_edge_3
+      213: 3287322558304396151
+    second: wakgood_walk_left_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -58,7 +58,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 24
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -127,55 +127,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wakgood_right_walk_edge_0
+      name: wakgood_walk_left_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 25
-        width: 9
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 00f2bdc59ff1c1660800000000000000
-      internalID: 7357791047081733888
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wakgood_right_walk_edge_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 25
-        width: 10
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c243096fadef8c7f0800000000000000
-      internalID: -591943134606248916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wakgood_right_walk_edge_2
-      rect:
-        serializedVersion: 2
-        x: 8
+        x: 0
         y: 0
-        width: 9
-        height: 24
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,20 +141,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc544822a966f9f70800000000000000
-      internalID: 9196181776303932876
+      spriteID: 3229ad4d3d7cb91d0800000000000000
+      internalID: -3342858585769340381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wakgood_right_walk_edge_3
+      name: wakgood_walk_left_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 49
         y: 0
-        width: 10
-        height: 23
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +162,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31e9949d60975e760800000000000000
-      internalID: 7486523025895562771
+      spriteID: 3299202f64517f0d0800000000000000
+      internalID: -3389216800120858333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wakgood_walk_left_2
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f445c245acfdd24b0800000000000000
+      internalID: -5463464712841964465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wakgood_walk_left_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 773acd5237aee9d20800000000000000
+      internalID: 3287322558304396151
       vertices: []
       indices: 
       edges: []

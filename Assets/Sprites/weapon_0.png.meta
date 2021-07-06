@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 10ee1ef247f16274380f5048c1d454d9
+guid: 23675efae14327746a75f9079929e095
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2508969409971512424
-    second: wakgood_left_walk_edge_0
-  - first:
-      213: -1732724925127511285
-    second: wakgood_left_walk_edge_1
-  - first:
-      213: 8883363332063461514
-    second: wakgood_left_walk_edge_2
-  - first:
-      213: -5651448060684946894
-    second: wakgood_left_walk_edge_3
+      213: 4966530107624842647
+    second: weapon_0_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -58,7 +49,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 24
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -127,85 +118,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wakgood_left_walk_edge_0
+      name: weapon_0_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 25
-        width: 9
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8646ca1a266a1d220800000000000000
-      internalID: 2508969409971512424
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wakgood_left_walk_edge_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 25
-        width: 10
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b033f486cdf14f7e0800000000000000
-      internalID: -1732724925127511285
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wakgood_left_walk_edge_2
-      rect:
-        serializedVersion: 2
-        x: 7
+        x: 0
         y: 0
-        width: 9
-        height: 24
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a808f5a62eb084b70800000000000000
-      internalID: 8883363332063461514
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wakgood_left_walk_edge_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 10
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 232bd447ee50291b0800000000000000
-      internalID: -5651448060684946894
+      spriteID: 795e24fa1d8ace440800000000000000
+      internalID: 4966530107624842647
       vertices: []
       indices: 
       edges: []
