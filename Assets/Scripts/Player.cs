@@ -20,12 +20,20 @@ public class Player : MonoBehaviour
     float h;
     float v;
 
+    public bool isSkill1;
+    public bool isInvincible;
+
     int rayh;
     int rayv;
     int firstdir;
     int beforeh;
 
     float RecoveryCount;
+
+    public GameObject grid;
+    public GameObject skill2Effect;
+    public GameObject skill1Effect;
+    public Shield shield;
 
     public Enemy enemy;
 
@@ -36,11 +44,13 @@ public class Player : MonoBehaviour
     public Animator anim;
 
     public GameManager gm;
+    public UIManager um;
     GameObject ScanObject;
 
     void Start()
     {
-        
+        isSkill1 = false;
+        isInvincible = false;
     }
 
     void Update()
@@ -48,6 +58,7 @@ public class Player : MonoBehaviour
         InputMove();
         InputScan();
         ShieldRecovery();
+        ScanSkillInput();
     }
     void InputMove()
     {
@@ -84,12 +95,14 @@ public class Player : MonoBehaviour
     }
     void InputScan()
     {
+        
         /*
         if (Input.GetButtonDown("Jump") && ScanObject != null)
         {
-            //gm.Action(ScanObject);
+            gm.Action(ScanObject);
         }
         */
+        
     }
     void ShieldRecovery()
     {
@@ -102,6 +115,42 @@ public class Player : MonoBehaviour
             }
             RecoveryCount = 0;
         }
+    }
+    void ScanSkillInput()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (um.currskillcooltime1 >= um.maxskillcooltime1)
+            {
+                skill1Effect.SetActive(true);
+                isSkill1 = true;
+                Invoke("skill1Back", 10f);
+                um.currskillcooltime1 = 0;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (um.currskillcooltime2 >= um.maxskillcooltime2)
+            {
+                skill2Effect.SetActive(true);
+                isInvincible = true;
+                Invoke("skill2Back", 5f);
+                um.currskillcooltime2 = 0;
+            }
+
+        }
+
+    }
+    void skill1Back()
+    {
+        skill1Effect.SetActive(false);
+        isSkill1 = false;
+    }
+    void skill2Back()
+    {
+        skill2Effect.SetActive(false);
+        isInvincible = false;
+        spr.color = new Color(1, 1, 1, 1);
     }
     void SetAnimation()
     {
@@ -126,6 +175,7 @@ public class Player : MonoBehaviour
     {
         Move();
         ShootRay();
+        CheckShield();
     }
     void Move()
     {
@@ -133,33 +183,52 @@ public class Player : MonoBehaviour
     }
     void ShootRay()
     {
-        Vector2 RayVec = new Vector2(rayh, rayv);
+        Vector2 RayVec = new Vector2(rayh, rayv)*0.5f;
         Debug.DrawRay(rigid.position, RayVec, new Color(0, 1, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, RayVec, 1f, LayerMask.GetMask("Object"));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, RayVec, 0.5f, LayerMask.GetMask("Object"));
 
         if (rayHit.collider != null)
         {
             ScanObject = rayHit.collider.gameObject;
+            Debug.Log("gd");
         }
         else
         {
             ScanObject = null;
         }
     }
+    void CheckShield()
+    {
+        if (curr_shield < 1)
+        {
+            shield.spr.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            shield.spr.color = new Color(1, 1, 1, 0.6f);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "EnemyBullet")
+        {     
+            if (!isInvincible)
+            {
+                Destroy(collision.gameObject);
+                OnHit(collision, 1f);
+            }
+        }
+        else if (collision.tag == "portal")
+        {
+            gm.Action(collision);           
+        }
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")
         {
-            if(gameObject.tag!= "Invincible")
+            if (!isInvincible)
             {
-                OnHit(collision, 1f);
-            }
-        }
-        else if (collision.tag == "EnemyBullet")
-        {     
-            if (gameObject.tag != "Invincible")
-            {
-                Destroy(collision.gameObject);
                 OnHit(collision, 1f);
             }
         }
@@ -169,21 +238,27 @@ public class Player : MonoBehaviour
         if (curr_shield > 0)
         {
             curr_shield -= dmg;
+            shield.spr.color = new Color(1, 1, 1, 0.1f);
             if (curr_shield < 0) curr_shield = 0;
+            isInvincible = true;
+            Invoke("colorBack", 0.3f);
         }
-        else curr_health -= dmg;
-        spr.color = new Color(1, 1, 1, 0.4f);
+        else
+        {
+            curr_health -= dmg;
+            spr.color = new Color(1, 1, 1, 0.6f);
+            transform.position -= (collision.transform.position - transform.position) * 0.2f;
+            isInvincible = true;
+            Invoke("colorBack", InvincibleTime);
+        }
         if (curr_health <= 0)
         {
-            gm.Playerdie();
+            gm.PlayerDie();
         }
-        gameObject.tag = "Invincible";
-        transform.position -= (collision.transform.position - transform.position)*0.2f;
-        Invoke("colorBack", InvincibleTime);
     }
     void colorBack()
     {
-        gameObject.tag = "Player";
+        isInvincible = false;
         spr.color = new Color(1, 1, 1, 1);
     }
 }
