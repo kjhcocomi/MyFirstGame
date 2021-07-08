@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     int rayv;
     int firstdir;
     int beforeh;
+    public int coin;
+    public int med;
 
     float RecoveryCount;
 
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour
         InputScan();
         ShieldRecovery();
         ScanSkillInput();
+        ScanDrinkInput();
     }
     void InputMove()
     {
@@ -141,6 +144,21 @@ public class Player : MonoBehaviour
         }
 
     }
+    void ScanDrinkInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (curr_health < max_health && med > 0)
+            {
+                curr_health += 3;
+                med--;
+                if (curr_health > max_health)
+                {
+                    curr_health = max_health;
+                }
+            }
+        }
+    }
     void skill1Back()
     {
         skill1Effect.SetActive(false);
@@ -222,6 +240,26 @@ public class Player : MonoBehaviour
         {
             gm.Action(collision);           
         }
+        else if (collision.tag == "GoldCoin")
+        {
+            coin += 1;
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "BlueCoin")
+        {
+            coin += 2;
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "RedCoin")
+        {
+            coin += 3;
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Med")
+        {
+            med+=1;
+            Destroy(collision.gameObject);
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -258,7 +296,7 @@ public class Player : MonoBehaviour
     }
     void colorBack()
     {
-        isInvincible = false;
+        if(!skill2Effect.activeSelf) isInvincible = false;
         spr.color = new Color(1, 1, 1, 1);
     }
 }

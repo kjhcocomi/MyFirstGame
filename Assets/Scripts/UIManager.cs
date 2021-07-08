@@ -20,9 +20,12 @@ public class UIManager : MonoBehaviour
     public Text criticalChanceText;
     public Text criticalDamageText;
     public Text InvincibleTimeText;
+    public Text CoinText;
+    public Text medText;
 
     public GameObject Skill1UI;
     public GameObject Skill2UI;
+    public GameObject ItemUI;
     public Image skill1;
     public Image skill2;
 
@@ -51,6 +54,8 @@ public class UIManager : MonoBehaviour
         ManageStats();
         CheckPressMenu();
         CheckSkillCoolTime();
+        CheckCoin();
+        CheckMed();
     }
     void ManagePlayerHP()
     {
@@ -91,6 +96,14 @@ public class UIManager : MonoBehaviour
         skill1.fillAmount = currskillcooltime1 / maxskillcooltime1;
         skill2.fillAmount = currskillcooltime2 / maxskillcooltime2;
     }
+    void CheckCoin()
+    {
+        CoinText.text = player.coin.ToString();
+    }
+    void CheckMed()
+    {
+        medText.text = player.med.ToString();
+    }
     void ManageStats()
     {
         attackText.text = "°ø°Ý·Â: " + player.attack;
@@ -108,6 +121,7 @@ public class UIManager : MonoBehaviour
         CharacterUI.SetActive(true);
         Skill1UI.SetActive(true);
         Skill2UI.SetActive(true);
+        ItemUI.SetActive(true);
     }
     public void GameExit()
     {

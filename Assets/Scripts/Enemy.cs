@@ -20,6 +20,9 @@ public class Enemy : MonoBehaviour
     public Player player;
     public Weapon weapon;
     public GameManager gm;
+    public GameObject dmgText;
+
+    public Transform hudPos;
 
     public SpriteRenderer spr;
     public Vector2 size;
@@ -30,18 +33,25 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D rigid;
 
     public GameObject bulletObj;
+    public GameObject CoinObjG;
+    public GameObject CoinObjB;
+    public GameObject CoinObjR;
+    public GameObject MedObj;
 
     public Slider slider;
 
     public bool findplayer;
     public bool isLongDistance;
 
+    Vector3 latePos;
+
     float h;
     float v;
+    float positionCheckCount;
 
     void Start()
     {
-        
+
     }
 
 
@@ -49,8 +59,18 @@ public class Enemy : MonoBehaviour
     {
         ManageHPbar();
         FindPlayer();
+        CheckLatePosition();
         Move();
         Reload();
+    }
+    void CheckLatePosition()
+    {
+        positionCheckCount += Time.deltaTime;
+        if (positionCheckCount >= 2)
+        {
+            latePos = gameObject.transform.position;
+            positionCheckCount = 0;
+        }
     }
     void Move()
     {
@@ -59,7 +79,7 @@ public class Enemy : MonoBehaviour
         {
             if (!isLongDistance)
             {
-                rigid.velocity = (player.transform.position - transform.position) * speed * 0.3f;
+                rigid.velocity = (player.transform.position - transform.position).normalized * speed;
             }
             else
             {
@@ -77,12 +97,17 @@ public class Enemy : MonoBehaviour
     }
     void FindPlayer()
     {
-        Collider2D hit = Physics2D.OverlapBox(transform.position, size, 0, whatIsLayer);
-        if (hit.name == "Player")
+        bool isfind = false;
+        Collider2D[] hit = Physics2D.OverlapBoxAll(transform.position, size, 0, whatIsLayer);
+        for(int i = 0; i < hit.Length; i++)
         {
-            findplayer = true;
+            if (hit[i].name == "Player")
+            {
+                findplayer = true;
+                isfind = true;
+            }
         }
-
+        if (!isfind) findplayer = false;
     }
     void Fire()
     {
@@ -113,30 +138,55 @@ public class Enemy : MonoBehaviour
         {
             if (!player.ispenetrate) Destroy(collision.gameObject);
             int randval=Random.Range(1, 101);
+            int randdmg = Random.Range(0, (int)player.attack + 3);
+            int rancridmg = Random.Range((int)player.attack + 2, (int)player.attack + 5);
             if (player.critical_chance >= randval)
             {
                 Debug.Log("Critical Hit!");
-                OnHit(weapon.dmg * player.attack * player.critical_damage,collision);
+                OnHit((weapon.dmg * player.attack) * player.critical_damage+rancridmg, collision, true);
             }
             else
             {
-                OnHit(weapon.dmg * player.attack,collision);
+                OnHit(weapon.dmg * player.attack + randdmg, collision, false);
             }
         }
-        else if (collision.tag == "Player")
+        else if (collision.tag == "Border")
         {
-
+            rigid.velocity = Vector3.zero;
+            transform.position = latePos;
         }
     }
 
-    void OnHit(float dmg, Collider2D collision)
+    void OnHit(float dmg, Collider2D collision, bool isCritical)
     {
+        setDmgText((int)dmg, isCritical);
         HitAnimation(collision);
-        currhealth -= dmg;
+        currhealth -= (int)dmg;
         Debug.Log(currhealth);
         if (currhealth <= 0) 
         {
+            CreateItem();
             Destroy(gameObject);
+        }
+    }
+    void CreateItem()
+    {
+        int randval = Random.Range(1, 101);
+        if (randval > 0 && randval <= 25)
+        {
+            Instantiate(CoinObjG, transform.position, transform.rotation);
+        }
+        else if (randval > 25 && randval <= 50)
+        {
+            Instantiate(CoinObjB, transform.position, transform.rotation);
+        }
+        else if (randval > 50 && randval <= 70)
+        {
+            Instantiate(CoinObjR, transform.position, transform.rotation);
+        }
+        else if (randval > 70 && randval <= 85)
+        {
+            Instantiate(MedObj, transform.position, transform.rotation);
         }
     }
     void HitAnimation(Collider2D collision)
@@ -144,6 +194,12 @@ public class Enemy : MonoBehaviour
         spr.color = new Color(1, 1, 1, 0.4f);
         Invoke("colorback", 0.1f);
         transform.position -= (collision.transform.position - transform.position)*weapon.knockback;
+    }
+    void setDmgText(int dmg, bool isCritical)
+    {
+        dmgText.GetComponent<Damage>().dmg = (int)dmg;
+        dmgText.GetComponent<Damage>().isCritical = isCritical;
+        GameObject dmgtext = Instantiate(dmgText, hudPos.position, transform.rotation);
     }
     void colorback()
     {
