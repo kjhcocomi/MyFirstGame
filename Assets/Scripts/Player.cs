@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public int recoveryAmount;
     public float curr_health;
     public float max_health;
     public float curr_shield;
@@ -19,14 +20,17 @@ public class Player : MonoBehaviour
     public bool ispenetrate;
     float h;
     float v;
+    public float currSpeed;
 
     public bool isSkill1;
     public bool isInvincible;
+    public bool[] haveGun;
 
     int rayh;
     int rayv;
     int firstdir;
     int beforeh;
+    public int key;
     public int coin;
     public int med;
 
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour
 
     public GameManager gm;
     public UIManager um;
+    public Weapon weapon;
     GameObject ScanObject;
 
     void Start()
@@ -62,6 +67,7 @@ public class Player : MonoBehaviour
         ShieldRecovery();
         ScanSkillInput();
         ScanDrinkInput();
+        scanChangeWeapon();
     }
     void InputMove()
     {
@@ -121,7 +127,7 @@ public class Player : MonoBehaviour
     }
     void ScanSkillInput()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             if (um.currskillcooltime1 >= um.maxskillcooltime1)
             {
@@ -131,7 +137,7 @@ public class Player : MonoBehaviour
                 um.currskillcooltime1 = 0;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKeyDown(KeyCode.X))
         {
             if (um.currskillcooltime2 >= um.maxskillcooltime2)
             {
@@ -139,6 +145,19 @@ public class Player : MonoBehaviour
                 isInvincible = true;
                 Invoke("skill2Back", 5f);
                 um.currskillcooltime2 = 0;
+            }
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (um.currskillcooltime3 >= um.maxskillcooltime3)
+            {
+                //skill3Effect.SetActive(true);
+                currSpeed = speed;
+                float upgradeSpeed = speed * 1.5f;
+                speed = upgradeSpeed;
+                Invoke("skill3Back", 10f);
+                um.currskillcooltime3 = 0;
             }
 
         }
@@ -150,12 +169,72 @@ public class Player : MonoBehaviour
         {
             if (curr_health < max_health && med > 0)
             {
-                curr_health += 3;
+                curr_health += recoveryAmount;
                 med--;
                 if (curr_health > max_health)
                 {
                     curr_health = max_health;
                 }
+            }
+        }
+    }
+
+    void scanChangeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            if (haveGun[0])
+            {
+                weapon.type = 0;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (haveGun[1])
+            {
+                weapon.type = 1;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (haveGun[2])
+            {
+                weapon.type = 2;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (haveGun[3])
+            {
+                weapon.type = 3;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if (haveGun[4])
+            {
+                weapon.type = 4;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            if (haveGun[5])
+            {
+                weapon.type = 5;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            if (haveGun[6])
+            {
+                weapon.type = 6;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            if (haveGun[7])
+            {
+                weapon.type = 7;
             }
         }
     }
@@ -169,6 +248,10 @@ public class Player : MonoBehaviour
         skill2Effect.SetActive(false);
         isInvincible = false;
         spr.color = new Color(1, 1, 1, 1);
+    }
+    void skill3Back()
+    {
+        speed = currSpeed;
     }
     void SetAnimation()
     {
@@ -197,7 +280,7 @@ public class Player : MonoBehaviour
     }
     void Move()
     {
-        rigid.velocity = new Vector2(h, v) * speed;
+        rigid.velocity = new Vector2(h, v) * speed*3f;
     }
     void ShootRay()
     {
@@ -260,6 +343,11 @@ public class Player : MonoBehaviour
             med+=1;
             Destroy(collision.gameObject);
         }
+        else if (collision.tag == "Chest")
+        {
+            Destroy(collision.gameObject);
+            um.ActionChestEvent();
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -279,7 +367,7 @@ public class Player : MonoBehaviour
             shield.spr.color = new Color(1, 1, 1, 0.1f);
             if (curr_shield < 0) curr_shield = 0;
             isInvincible = true;
-            Invoke("colorBack", 0.3f);
+            Invoke("colorBack", 0.5f);
         }
         else
         {

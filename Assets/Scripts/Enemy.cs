@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     public GameObject CoinObjB;
     public GameObject CoinObjR;
     public GameObject MedObj;
+    public GameObject chestObj;
 
     public Slider slider;
 
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour
         CheckLatePosition();
         Move();
         Reload();
+        checkDie();
     }
     void CheckLatePosition()
     {
@@ -126,6 +128,14 @@ public class Enemy : MonoBehaviour
     {
         currShotDelay += Time.deltaTime;
     }
+    void checkDie()
+    {
+        if (currhealth <= 0)
+        {
+            Destroy(gameObject);
+            CreateItem();
+        }
+    }
     void ManageHPbar()
     {
         slider.maxValue = maxhealth;
@@ -143,11 +153,11 @@ public class Enemy : MonoBehaviour
             if (player.critical_chance >= randval)
             {
                 Debug.Log("Critical Hit!");
-                OnHit((weapon.dmg * player.attack) * player.critical_damage+rancridmg, collision, true);
+                OnHit((weapon.dmg[weapon.type] * player.attack) * player.critical_damage+rancridmg, collision, true);
             }
             else
             {
-                OnHit(weapon.dmg * player.attack + randdmg, collision, false);
+                OnHit(weapon.dmg[weapon.type] * player.attack + randdmg, collision, false);
             }
         }
         else if (collision.tag == "Border")
@@ -162,12 +172,6 @@ public class Enemy : MonoBehaviour
         setDmgText((int)dmg, isCritical);
         HitAnimation(collision);
         currhealth -= (int)dmg;
-        Debug.Log(currhealth);
-        if (currhealth <= 0) 
-        {
-            CreateItem();
-            Destroy(gameObject);
-        }
     }
     void CreateItem()
     {
@@ -187,6 +191,10 @@ public class Enemy : MonoBehaviour
         else if (randval > 70 && randval <= 85)
         {
             Instantiate(MedObj, transform.position, transform.rotation);
+        }
+        else
+        {
+            Instantiate(chestObj, transform.position, transform.rotation);
         }
     }
     void HitAnimation(Collider2D collision)

@@ -12,9 +12,9 @@ public class Weapon : MonoBehaviour
     public Player player;
 
     public float currShootDelay;
-    public float maxShootDelay;
-    public float speed;
-    public float dmg;
+    public float[] maxShootDelay;
+    public float[] speed;
+    public float[] dmg;
     public float knockback;
 
     public int type;
@@ -22,6 +22,8 @@ public class Weapon : MonoBehaviour
     public GameObject[] bulletObj;
 
     public SpriteRenderer spr;
+
+    public Sprite[] weaponSprite;
 
     private void Start()
     {
@@ -36,10 +38,18 @@ public class Weapon : MonoBehaviour
         MousePosition = Input.mousePosition;
         Fire();
         Reload();
+        checkCurrWeapon();
     }
     void ChangeWeaponPosition()
     {
-        transform.position = player.transform.position-new Vector3(0,0.2f,0);
+        if (target.x < player.transform.position.x)
+        {
+            transform.position = player.transform.position - new Vector3(0.25f, 0.25f, 0);
+        }
+        else
+        {
+            transform.position = player.transform.position - new Vector3(-0.25f, 0.25f, 0);
+        }
     }
     void ChangeWeaponRotation()
     {
@@ -70,33 +80,34 @@ public class Weapon : MonoBehaviour
     void Fire()
     {
         if (!Input.GetButton("Fire1")) return;
-        if (currShootDelay < maxShootDelay/player.attack_speed) return;
+        if (currShootDelay < maxShootDelay[type]/player.attack_speed) return;
 
-        if (type == 0)
+
+        if (!player.isSkill1)
         {
-            if (!player.isSkill1)
-            {
-                GameObject bullet = Instantiate(bulletObj[0], transform.position, transform.rotation);
-                Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-                rigid.AddForce((target - player.transform.position).normalized * speed, ForceMode2D.Impulse);
-            }
-            else
-            {
-                GameObject bulletA = Instantiate(bulletObj[0], transform.position + new Vector3(0, 1, 0) * 0.1f, transform.rotation);
-                GameObject bulletB = Instantiate(bulletObj[0], transform.position - new Vector3(0, 1, 0) * 0.1f, transform.rotation);
-                Rigidbody2D rigidA = bulletA.GetComponent<Rigidbody2D>();
-                Rigidbody2D rigidB = bulletB.GetComponent<Rigidbody2D>();
-                rigidA.AddForce((target - player.transform.position).normalized * speed, ForceMode2D.Impulse);
-                rigidB.AddForce((target - player.transform.position).normalized * speed, ForceMode2D.Impulse);
-            }
-
+            GameObject bullet = Instantiate(bulletObj[type], transform.position, transform.rotation);
+            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+            rigid.AddForce((target - player.transform.position).normalized * speed[type], ForceMode2D.Impulse);
         }
+        else
+        {
+            GameObject bulletA = Instantiate(bulletObj[type], transform.position + new Vector3(0, 1, 0) * 0.1f, transform.rotation);
+            GameObject bulletB = Instantiate(bulletObj[type], transform.position - new Vector3(0, 1, 0) * 0.1f, transform.rotation);
+            Rigidbody2D rigidA = bulletA.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigidB = bulletB.GetComponent<Rigidbody2D>();
+            rigidA.AddForce((target - player.transform.position).normalized * speed[type], ForceMode2D.Impulse);
+            rigidB.AddForce((target - player.transform.position).normalized * speed[type], ForceMode2D.Impulse);
+        }
+
         currShootDelay = 0;
     }
     void Reload()
     {
         currShootDelay += Time.deltaTime;
     }
-
+    void checkCurrWeapon()
+    {
+        spr.sprite = weaponSprite[type];
+    }
 }
 
