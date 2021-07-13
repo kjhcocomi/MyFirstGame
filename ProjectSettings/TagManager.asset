@@ -17,6 +17,9 @@ TagManager:
   - Cloud
   - Chest
   - Key
+  - Door1
+  - Door2
+  - Door3
   layers:
   - Default
   - TransparentFX

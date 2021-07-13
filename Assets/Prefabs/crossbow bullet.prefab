@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4377193486964524040}
   - component: {fileID: 8593564971114728550}
   - component: {fileID: -4669456549713928676}
-  - component: {fileID: 7121770680781078827}
   - component: {fileID: -7096617573436868446}
+  - component: {fileID: 2996123772494213837}
   m_Layer: 0
   m_Name: crossbow bullet
   m_TagString: Bullet
@@ -106,22 +106,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &7121770680781078827
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4559882800035325718}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &-7096617573436868446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,3 +118,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd76ef52f228622438cfbd5697d465d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &2996123772494213837
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4559882800035325718}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.68, y: 0.36}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.68, y: 0.36}
+  m_EdgeRadius: 0

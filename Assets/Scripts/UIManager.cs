@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     public Text playerSpeedText;
     public Text CoinText;
     public Text medText;
+    public Text keyText;
     public Text chest1;
     public Text chest2;
     public Text chest3;
@@ -72,8 +73,7 @@ public class UIManager : MonoBehaviour
         ManageStats();
         CheckPressMenu();
         CheckSkillCoolTime();
-        CheckCoin();
-        CheckMed();
+        checkItem();
     }
     void ManagePlayerHP()
     {
@@ -119,13 +119,18 @@ public class UIManager : MonoBehaviour
         skill2.fillAmount = currskillcooltime2 / maxskillcooltime2;
         skill3.fillAmount = currskillcooltime3 / maxskillcooltime3;
     }
-    void CheckCoin()
+    void checkItem()
     {
-        CoinText.text = player.coin.ToString();
-    }
-    void CheckMed()
-    {
+        if (player.currWeaponLevel == 7)
+        {
+            CoinText.text = player.coin.ToString();
+        }
+        else
+        {
+            CoinText.text = player.coin.ToString() + "/" + gm.weaponPrice[player.currWeaponLevel].ToString();
+        }
         medText.text = player.med.ToString();
+        keyText.text = player.key.ToString();
     }
     void ManageStats()
     {

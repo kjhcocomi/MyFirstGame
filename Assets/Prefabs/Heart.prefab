@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4377193486964524040}
   - component: {fileID: 8593564971114728550}
   - component: {fileID: -4669456549713928676}
-  - component: {fileID: 7121770680781078827}
   - component: {fileID: -7096617573436868446}
+  - component: {fileID: 3247204466935245075}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Bullet
@@ -106,7 +106,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &7121770680781078827
+--- !u!114 &-7096617573436868446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4559882800035325718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd76ef52f228622438cfbd5697d465d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &3247204466935245075
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,16 +133,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &-7096617573436868446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4559882800035325718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd76ef52f228622438cfbd5697d465d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Radius: 1.4

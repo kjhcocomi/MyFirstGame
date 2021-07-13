@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
                                     ,"크리티컬 확률 증가", "크리티컬 데미지 증가", "이동속도 증가"
                                     ,"피격시 무적시간 증가", "z스킬 쿨타임 감소", "x스킬 쿨타임 감소"
                                     , "c스킬 쿨타임 감소", "물약 회복량 증가", "관통총알"};
-
+    public int[] weaponPrice;
     int mapCount;
 
     public Vector2 size;
@@ -56,11 +56,11 @@ public class GameManager : MonoBehaviour
     {
         if (num == 0)
         {
-            player.attack *= 1.5f;
+            player.attack += 0.5f;
         }
         else if (num == 1)
         {
-            player.attack_speed *= 1.5f;
+            player.attack_speed += 0.5f;
         }
         else if (num == 2)
         {
@@ -76,16 +76,16 @@ public class GameManager : MonoBehaviour
         }
         else if (num == 5)
         {
-            player.critical_damage *=1.5f;
+            player.critical_damage +=0.3f;
         }
         else if (num == 6)
         {
-            player.speed *= 1.1f;
-            player.currSpeed *=1.1f;
+            player.speed += 0.2f;
+            player.currSpeed += 0.2f;
         }
         else if (num == 7)
         {
-            player.InvincibleTime += 1.2f;
+            player.InvincibleTime += 0.3f;
         }
         else if (num == 8)
         {

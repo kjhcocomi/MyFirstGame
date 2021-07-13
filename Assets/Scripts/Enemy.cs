@@ -91,10 +91,12 @@ public class Enemy : MonoBehaviour
         }
         else if (currMoveDelay > maxMoveDelay)
         {
+            /*
             h = Random.Range(-1, 2);
             v = Random.Range(-1, 2);
             rigid.velocity = new Vector2(h, v).normalized * speed;
             currMoveDelay = 0;
+            */
         }
     }
     void FindPlayer()

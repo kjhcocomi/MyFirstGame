@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     public int key;
     public int coin;
     public int med;
+    public int currWeaponLevel;
 
     float RecoveryCount;
 
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
         ScanSkillInput();
         ScanDrinkInput();
         scanChangeWeapon();
+        scanUpgradeWeapon();
     }
     void InputMove()
     {
@@ -238,6 +240,19 @@ public class Player : MonoBehaviour
             }
         }
     }
+    void scanUpgradeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (coin >= gm.weaponPrice[currWeaponLevel])
+            {
+                coin -= gm.weaponPrice[currWeaponLevel];
+                currWeaponLevel += 1;
+                haveGun[currWeaponLevel] = true;
+                weapon.type = currWeaponLevel;
+            }
+        }
+    }
     void skill1Back()
     {
         skill1Effect.SetActive(false);
@@ -280,7 +295,7 @@ public class Player : MonoBehaviour
     }
     void Move()
     {
-        rigid.velocity = new Vector2(h, v) * speed*3f;
+        rigid.velocity = new Vector2(h, v) * speed*5f;
     }
     void ShootRay()
     {
@@ -347,6 +362,38 @@ public class Player : MonoBehaviour
         {
             Destroy(collision.gameObject);
             um.ActionChestEvent();
+        }
+        else if (collision.tag == "Door1")
+        {
+            if (key >= 1)
+            {
+                Destroy(collision.gameObject);
+                key -= 1;
+                coin += 10;
+            }
+        }
+        else if (collision.tag == "Door2")
+        {
+            if (key >= 2)
+            {
+                Destroy(collision.gameObject);
+                key -= 2;
+                coin += 20;
+            }
+        }
+        else if (collision.tag == "Door3")
+        {
+            if (key >= 3)
+            {
+                Destroy(collision.gameObject);
+                key -= 3;
+                coin += 30;
+            }
+        }
+        else if (collision.tag == "Key")
+        {
+            Destroy(collision.gameObject);
+            key += 1;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
