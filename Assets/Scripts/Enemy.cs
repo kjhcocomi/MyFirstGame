@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     public GameManager gm;
     public GameObject dmgText;
 
+    Animator anim;
+
     public Transform hudPos;
 
     public SpriteRenderer spr;
@@ -52,7 +54,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-
+        anim = GetComponent<Animator>(); 
     }
 
 
