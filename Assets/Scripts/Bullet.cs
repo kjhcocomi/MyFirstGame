@@ -11,17 +11,25 @@ public class Bullet : MonoBehaviour
         {
             Invoke("destroyBullet", 0.48f);
         }
+        else
+        {
+            Invoke("destroyEnemyBullet", 2f);
+        }
     }
 
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Border")
+        if (collision.gameObject.tag == "Border"|| collision.gameObject.tag == "Rock")
         {
             Destroy(gameObject);
         }
     }
     void destroyBullet()
+    {
+        Destroy(gameObject);
+    }
+    void destroyEnemyBullet()
     {
         Destroy(gameObject);
     }

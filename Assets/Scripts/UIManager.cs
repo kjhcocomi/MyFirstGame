@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject CharacterUI;
     public GameObject menu;
     public GameObject DeadUI;
+    public GameObject clearUI;
 
     public Text attackText;
     public Text attackSpeedText;
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
     public Text chest1;
     public Text chest2;
     public Text chest3;
+    public Text scoreText;
 
     public GameObject Skill1UI;
     public GameObject Skill2UI;
@@ -166,6 +168,7 @@ public class UIManager : MonoBehaviour
     public void reStart()
     {
         if (DeadUI.activeSelf) DeadUI.SetActive(false);
+        if (clearUI.activeSelf) clearUI.SetActive(false);
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
@@ -218,5 +221,11 @@ public class UIManager : MonoBehaviour
         ChestUI.SetActive(false);
         Time.timeScale = 1;
         gm.PushChestButton(buttonNum3);
+    }
+    public void ActionClearUI()
+    {
+        Time.timeScale = 0;
+        scoreText.text = "클리어 시간: " + ((int)gm.score).ToString() + " 초";
+        clearUI.SetActive(true);
     }
 }

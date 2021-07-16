@@ -25,6 +25,15 @@ public class Weapon : MonoBehaviour
 
     public Sprite[] weaponSprite;
 
+    public AudioSource ads;
+
+    public AudioClip bow;
+    public AudioClip gun;
+    public AudioClip sniper;
+    public AudioClip sword;
+    public AudioClip wand;
+    public AudioClip minigun;
+
     private void Start()
     {
         Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -99,6 +108,30 @@ public class Weapon : MonoBehaviour
             rigidB.AddForce((target - player.transform.position).normalized * speed[type], ForceMode2D.Impulse);
         }
 
+        if (type == 0 || type == 2)
+        {
+            playSound("gun");
+        }
+        else if (type == 4)
+        {
+            playSound("minigun");         
+        }
+        else if (type == 5)
+        {
+            playSound("sniper");
+        }
+        else if (type == 1 || type == 3)
+        {
+            playSound("bow");
+        }
+        else if (type == 6)
+        {
+            playSound("sword");
+        }
+        else if (type == 7)
+        {
+            playSound("wand");
+        }
         currShootDelay = 0;
     }
     void Reload()
@@ -108,6 +141,34 @@ public class Weapon : MonoBehaviour
     void checkCurrWeapon()
     {
         spr.sprite = weaponSprite[type];
+    }
+    void playSound(string str)
+    {
+        if (str == "gun")
+        {
+            ads.clip = gun;
+        }
+        else if (str == "sniper")
+        {
+            ads.clip = sniper;
+        }
+        else if (str == "bow")
+        {
+            ads.clip = bow;
+        }
+        else if (str == "minigun")
+        {
+            ads.clip = minigun;
+        }
+        else if (str == "sword")
+        {
+            ads.clip = sword;
+        }
+        else if (str == "wand")
+        {
+            ads.clip = wand;
+        }
+        ads.Play();
     }
 }
 

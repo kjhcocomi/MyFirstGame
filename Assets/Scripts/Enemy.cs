@@ -17,6 +17,10 @@ public class Enemy : MonoBehaviour
     public float bulletSpeed;
     public float attack;
 
+
+    float findCount;
+    float curBossAttackCount = 3;
+
     public Player player;
     public Weapon weapon;
     public GameManager gm;
@@ -40,20 +44,37 @@ public class Enemy : MonoBehaviour
     public GameObject CoinObjR;
     public GameObject MedObj;
     public GameObject chestObj;
+    public GameObject bulletBossObj;
+
+    public UIManager um;
 
     public Slider slider;
 
     public bool findplayer;
     public bool isLongDistance;
 
+    AudioSource ads;
+
+    public AudioClip banana;
+    public AudioClip damaged;
+    public AudioClip die;
+
     Vector3 latePos;
 
     float h;
     float v;
     float positionCheckCount;
+    float maxFindCount = 0.5f;
+    float maxBossShotDelay = 0.9f;
+    float curBossShotDelay;
+    float maxBossMoveDelay = 3f;
+    float curBossMoveDelay;
+
+    int attackWhat;
 
     void Start()
     {
+        ads = GetComponent<AudioSource>();
         anim = GetComponent<Animator>(); 
     }
 
@@ -78,6 +99,7 @@ public class Enemy : MonoBehaviour
     }
     void Move()
     {
+        curBossMoveDelay += Time.deltaTime;
         currMoveDelay+=Time.deltaTime;
         if (findplayer)
         {
@@ -88,7 +110,14 @@ public class Enemy : MonoBehaviour
             else
             {
                 rigid.velocity = new Vector3(0, 0, 0);
-                Fire();
+                if (enemyName == "S")
+                {
+                    Fire();
+                }
+                else if (enemyName == "B")
+                {
+                    BossFire();
+                }
             }
         }
         else if (currMoveDelay > maxMoveDelay)
@@ -102,42 +131,125 @@ public class Enemy : MonoBehaviour
         }
     }
     void FindPlayer()
+    { 
+        findCount += Time.deltaTime;
+        if (findCount >= maxFindCount)
+        {
+            maxFindCount = Random.Range(0.3f, 0.7f);
+            FindPlayer2();
+            findCount = 0;
+        }
+    }
+    void FindPlayer2()
     {
         bool isfind = false;
-        Collider2D[] hit = Physics2D.OverlapBoxAll(transform.position, size, 0, whatIsLayer);
-        for(int i = 0; i < hit.Length; i++)
+        Collider2D hit = Physics2D.OverlapBox(transform.position, size, 0, whatIsLayer);
+
+        if (hit != null)
         {
-            if (hit[i].name == "Player")
+            if (hit.name == "Player")
             {
                 findplayer = true;
                 isfind = true;
             }
         }
-        if (!isfind) findplayer = false;
+        if (!isfind)
+        {
+            findplayer = false;
+        }
     }
     void Fire()
     {
-        if (currShotDelay < maxShotDelay) return;
+        if (currShotDelay < maxShotDelay)
+        {
+            return;
+        }
         if (enemyName == "S")
         {
+            playSound("banana");
+            anim.SetBool("isFind", true);
+            Invoke("returnAnimation", 0.2f);
             GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
             Vector3 dirVec = player.transform.position - transform.position;
             rigid.AddForce(dirVec.normalized * bulletSpeed, ForceMode2D.Impulse);
-        }
+        }      
         currShotDelay = 0;
+    }
+    void BossFire()
+    {
+        curBossAttackCount += Time.deltaTime;
+        if (curBossAttackCount >= 3)
+        {
+            attackWhat = Random.Range(0, 3);
+            curBossAttackCount = 0;
+        }
+        if (attackWhat == 0)
+        {
+            if (currShotDelay < maxShotDelay)
+            {
+                return;
+            }
+            playSound("banana");
+            anim.SetBool("isFind", true);
+            Invoke("returnAnimation", 0.1f);
+            GameObject bullet = Instantiate(bulletObj, transform.position, transform.rotation);
+            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+            Vector3 dirVec = player.transform.position - transform.position;
+            rigid.AddForce(dirVec.normalized * bulletSpeed, ForceMode2D.Impulse);
+            currShotDelay = 0;
+        }
+        else if (attackWhat == 1)
+        {
+            if (curBossShotDelay < maxBossShotDelay)
+            {
+                return;
+            }
+            playSound("banana");
+            anim.SetBool("isFind", true);
+            Invoke("returnAnimation", 0.2f);
+            GameObject bulletb = Instantiate(bulletBossObj, transform.position, transform.rotation);
+            Rigidbody2D rigidb = bulletb.GetComponent<Rigidbody2D>();
+
+            Vector3 dirVec = player.transform.position - transform.position;
+            rigidb.AddForce(dirVec.normalized * bulletSpeed * 0.6f, ForceMode2D.Impulse);
+            curBossShotDelay = 0;
+        }
+        else if (attackWhat == 2)
+        {
+            if (curBossMoveDelay < maxBossMoveDelay)
+            {
+                return;
+            }
+            attackWhat = Random.Range(0, 2);
+            transform.position = player.transform.position + Vector3.up*2f;
+            curBossMoveDelay = 0;
+        }
+    }
+    void returnAnimation()
+    {
+        anim.SetBool("isFind", false);
     }
    void Reload()
     {
         currShotDelay += Time.deltaTime;
+        curBossShotDelay += Time.deltaTime;
     }
     void checkDie()
     {
         if (currhealth <= 0)
         {
-            Destroy(gameObject);
-            CreateItem();
+            if (enemyName == "B")
+            {
+                um.ActionClearUI();
+            }
+            else
+            {
+                player.coin += 1;
+                Destroy(gameObject);
+                CreateItem();
+            }
         }
     }
     void ManageHPbar()
@@ -150,6 +262,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.tag == "Bullet")
         {
+            playSound("damaged");
             if (!player.ispenetrate) Destroy(collision.gameObject);
             int randval=Random.Range(1, 101);
             int randdmg = Random.Range(0, (int)player.attack + 3);
@@ -164,11 +277,13 @@ public class Enemy : MonoBehaviour
                 OnHit(weapon.dmg[weapon.type] * player.attack + randdmg, collision, false);
             }
         }
+        /*
         else if (collision.tag == "Border")
         {
             rigid.velocity = Vector3.zero;
             transform.position = latePos;
         }
+        */
     }
 
     void OnHit(float dmg, Collider2D collision, bool isCritical)
@@ -205,7 +320,10 @@ public class Enemy : MonoBehaviour
     {
         spr.color = new Color(1, 1, 1, 0.4f);
         Invoke("colorback", 0.1f);
-        transform.position -= (collision.transform.position - transform.position)*weapon.knockback;
+        if (enemyName == "S")
+        {
+            transform.position -= (collision.transform.position - transform.position) * weapon.knockback;
+        }
     }
     void setDmgText(int dmg, bool isCritical)
     {
@@ -216,5 +334,21 @@ public class Enemy : MonoBehaviour
     void colorback()
     {
         spr.color = new Color(1, 1, 1, 1);
+    }
+    void playSound(string str)
+    {
+        if (str == "banana")
+        {
+            ads.clip = banana;
+        }
+        else if (str == "damaged")
+        {
+            ads.clip = damaged;
+        }
+        else if (str == "die")
+        {
+
+        }
+        ads.Play();
     }
 }

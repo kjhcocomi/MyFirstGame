@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public int[] weaponPrice;
     int mapCount;
 
+    public float score;
     public Vector2 size;
     public LayerMask whatIsLayer;
 
@@ -26,12 +27,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.SetCursor(cursorArrow, Vector2.zero, CursorMode.ForceSoftware);
     }
-    
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
+        score += Time.deltaTime;
     }
+    // Update is called once per frame
     public void PlayerDie()
     {
         player.spr.flipY = true;
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         }
         else if (num == 3)
         {
-            player.max_shield += 2;
+            player.max_shield += 1;
         }
         else if (num == 4)
         {

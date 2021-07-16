@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public bool isInvincible;
     public bool[] haveGun;
 
+    bool stopPlag;
     int rayh;
     int rayv;
     int firstdir;
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour
     public int currWeaponLevel;
 
     float RecoveryCount;
+
+    public AudioSource ads;
 
     public GameObject grid;
     public GameObject skill2Effect;
@@ -54,6 +57,18 @@ public class Player : MonoBehaviour
     public UIManager um;
     public Weapon weapon;
     GameObject ScanObject;
+
+    public AudioClip changeWeapon;
+    public AudioClip door;
+    public AudioClip drink;
+    public AudioClip get;
+    public AudioClip upgradeWeapon;
+    public AudioClip damaged;
+    public AudioClip die;
+    public AudioClip walk;
+    public AudioClip skillZ;
+    public AudioClip skillX;
+    public AudioClip skillC;
 
     void Start()
     {
@@ -77,6 +92,22 @@ public class Player : MonoBehaviour
         //v = gm.isAction ? 0 : Input.GetAxisRaw("Vertical");
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
+        if (h != 0 || v != 0)
+        {
+            if (!ads.isPlaying)
+            {
+                playSound("walk");
+            }
+            stopPlag = true;
+        }
+        else
+        {
+            if (stopPlag)
+            {
+                ads.Stop();
+                stopPlag = false;
+            }
+        }
 
         /*
         if (h == 0 && v != 0) firstdir = 0;
@@ -133,6 +164,7 @@ public class Player : MonoBehaviour
         {
             if (um.currskillcooltime1 >= um.maxskillcooltime1)
             {
+                playSound("skillC");
                 skill1Effect.SetActive(true);
                 isSkill1 = true;
                 Invoke("skill1Back", 10f);
@@ -143,6 +175,7 @@ public class Player : MonoBehaviour
         {
             if (um.currskillcooltime2 >= um.maxskillcooltime2)
             {
+                playSound("skillX");
                 skill2Effect.SetActive(true);
                 isInvincible = true;
                 Invoke("skill2Back", 5f);
@@ -154,6 +187,7 @@ public class Player : MonoBehaviour
         {
             if (um.currskillcooltime3 >= um.maxskillcooltime3)
             {
+                playSound("skillZ");
                 //skill3Effect.SetActive(true);
                 currSpeed = speed;
                 float upgradeSpeed = speed * 1.5f;
@@ -173,6 +207,7 @@ public class Player : MonoBehaviour
             {
                 curr_health += recoveryAmount;
                 med--;
+                playSound("drink");
                 if (curr_health > max_health)
                 {
                     curr_health = max_health;
@@ -187,6 +222,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[0])
             {
+                if (weapon.type != 0)
+                {
+                    playSound("changeWeapon");
+                }            
                 weapon.type = 0;
             }
         }
@@ -194,6 +233,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[1])
             {
+                if (weapon.type != 1)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 1;
             }
         }
@@ -201,6 +244,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[2])
             {
+                if (weapon.type != 2)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 2;
             }
         }
@@ -208,6 +255,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[3])
             {
+                if (weapon.type != 3)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 3;
             }
         }
@@ -215,6 +266,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[4])
             {
+                if (weapon.type != 4)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 4;
             }
         }
@@ -222,6 +277,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[5])
             {
+                if (weapon.type != 5)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 5;
             }
         }
@@ -229,6 +288,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[6])
             {
+                if (weapon.type != 6)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 6;
             }
         }
@@ -236,6 +299,10 @@ public class Player : MonoBehaviour
         {
             if (haveGun[7])
             {
+                if (weapon.type != 7)
+                {
+                    playSound("changeWeapon");
+                }
                 weapon.type = 7;
             }
         }
@@ -246,6 +313,7 @@ public class Player : MonoBehaviour
         {
             if (coin >= gm.weaponPrice[currWeaponLevel])
             {
+                playSound("upgradeWeapon");
                 coin -= gm.weaponPrice[currWeaponLevel];
                 currWeaponLevel += 1;
                 haveGun[currWeaponLevel] = true;
@@ -290,8 +358,8 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        ShootRay();
         CheckShield();
+        checkDie();
     }
     void Move()
     {
@@ -340,26 +408,31 @@ public class Player : MonoBehaviour
         }
         else if (collision.tag == "GoldCoin")
         {
-            coin += 1;
             Destroy(collision.gameObject);
+            coin += 1;
+            playSound("get");        
         }
         else if (collision.tag == "BlueCoin")
         {
-            coin += 2;
             Destroy(collision.gameObject);
+            coin += 2;
+            playSound("get");         
         }
         else if (collision.tag == "RedCoin")
         {
-            coin += 3;
             Destroy(collision.gameObject);
+            coin += 3;
+            playSound("get");    
         }
         else if (collision.tag == "Med")
         {
-            med+=1;
             Destroy(collision.gameObject);
+            med +=1;
+            playSound("get");          
         }
         else if (collision.tag == "Chest")
         {
+            playSound("get");
             Destroy(collision.gameObject);
             um.ActionChestEvent();
         }
@@ -367,6 +440,7 @@ public class Player : MonoBehaviour
         {
             if (key >= 1)
             {
+                playSound("door");
                 Destroy(collision.gameObject);
                 key -= 1;
                 coin += 10;
@@ -376,6 +450,7 @@ public class Player : MonoBehaviour
         {
             if (key >= 2)
             {
+                playSound("door");
                 Destroy(collision.gameObject);
                 key -= 2;
                 coin += 20;
@@ -385,6 +460,7 @@ public class Player : MonoBehaviour
         {
             if (key >= 3)
             {
+                playSound("door");
                 Destroy(collision.gameObject);
                 key -= 3;
                 coin += 30;
@@ -392,6 +468,7 @@ public class Player : MonoBehaviour
         }
         else if (collision.tag == "Key")
         {
+            playSound("get");
             Destroy(collision.gameObject);
             key += 1;
         }
@@ -408,6 +485,7 @@ public class Player : MonoBehaviour
     }
     void OnHit(Collider2D collision, float dmg)
     {
+        playSound("damaged");
         if (curr_shield > 0)
         {
             curr_shield -= dmg;
@@ -424,14 +502,66 @@ public class Player : MonoBehaviour
             isInvincible = true;
             Invoke("colorBack", InvincibleTime);
         }
-        if (curr_health <= 0)
-        {
-            gm.PlayerDie();
-        }
     }
     void colorBack()
     {
         if(!skill2Effect.activeSelf) isInvincible = false;
         spr.color = new Color(1, 1, 1, 1);
+    }
+    void checkDie()
+    {
+        if (curr_health <= 0)
+        {
+            playSound("die");
+            gm.PlayerDie();
+        }
+    }
+    void playSound(string str)
+    {
+        if (str == "changeWeapon")
+        {
+            ads.clip = changeWeapon;
+        }
+        else if (str == "door")
+        {
+            ads.clip = door;
+        }
+        else if (str == "drink")
+        {
+            ads.clip = drink;
+        }
+        else if (str == "get")
+        {
+            ads.clip = get;
+        }
+        else if (str == "upgradeWeapon")
+        {
+            ads.clip = upgradeWeapon;
+        }
+        else if (str == "damaged")
+        {
+            ads.clip = damaged;
+        }
+        else if (str == "die")
+        {
+            ads.clip = die;
+        }
+        else if (str == "walk")
+        {
+            ads.clip = walk;
+        }
+        else if (str == "skillZ")
+        {
+            ads.clip = skillZ;
+        }
+        else if (str == "skillX")
+        {
+            ads.clip = skillX;
+        }
+        else if (str == "skillC")
+        {
+            ads.clip = skillC;
+        }
+        ads.Play();
     }
 }
